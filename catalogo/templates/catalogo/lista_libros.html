@@ -1,0 +1,38 @@
+{% extends 'catalogo/base.html' %}
+
+{% block page_title %}Catálogo | MiBiblioteca{% endblock %}
+
+{% block contenido %}
+<h1>Catálogo de libros</h1>
+
+{% if libros %}
+<table class="tabla-libros">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.genero }}</td>
+            <td>
+                {% if libro.disponible %}
+                <span class="estado disponible">Disponible</span>
+                {% else %}
+                <span class="estado no-disponible">No disponible</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="vacio">No hay libros en el catálogo</p>
+{% endif %}
+{% endblock %}
