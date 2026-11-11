@@ -11,10 +11,22 @@
     <dd>{{ libro.titulo }}</dd>
     <dt>Autor</dt>
     <dd>{{ libro.autor }}</dd>
+    <dt>ISBN</dt>
+    <dd>{{ libro.isbn }}</dd>
+    <dt>Sinopsis</dt>
+    <dd>{{ libro.sinopsis|default:"Sin sinopsis" }}</dd>
     <dt>Género</dt>
-    <dd>{{ libro.genero }}</dd>
+    <dd>{{ libro.get_genero_display }}</dd>
+    <dt>Dificultad</dt>
+    <dd>{{ libro.get_dificultad_display }}</dd>
     <dt>Año de publicación</dt>
     <dd>{{ libro.anio_publicacion }}</dd>
+    <dt>Fecha de publicación</dt>
+    <dd>{{ libro.fecha_publicacion }}</dd>
+    <dt>Páginas</dt>
+    <dd>{{ libro.paginas }}</dd>
+    <dt>Precio</dt>
+    <dd>{{ libro.precio }} €</dd>
     <dt>Estado</dt>
     <dd>{% if libro.disponible %}Disponible{% else %}No disponible{% endif %}</dd>
 </dl>

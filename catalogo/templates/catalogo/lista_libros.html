@@ -20,7 +20,7 @@
         <tr>
             <td><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></td>
             <td>{{ libro.autor }}</td>
-            <td>{{ libro.genero }}</td>
+            <td>{{ libro.get_genero_display }}</td>
             <td>
                 {% if libro.disponible %}
                 <span class="estado disponible">Disponible</span>
