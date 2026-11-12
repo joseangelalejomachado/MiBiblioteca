@@ -24,6 +24,7 @@ class Libro(models.Model):
     paginas = models.PositiveIntegerField()
     precio = models.DecimalField(max_digits=8, decimal_places=2)
     disponible = models.BooleanField(default=True)
+    idioma = models.CharField(max_length=30, default="Español") # Si definimos un campo obligatorio sin declarar valor por defecto, si hay tablas con Datos al hacer makemigrations python pedirá un valor por defecto
     genero = models.CharField(
         max_length=50,
         choices=Genero.choices,
