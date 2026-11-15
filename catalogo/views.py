@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Avg, Count, Max, Min, Q
 from django.shortcuts import get_object_or_404, render
 
@@ -50,8 +51,11 @@ def principal(request):
     return render(request, "catalogo/principal.html", contexto)
 
 
+LIBROS_POR_PAGINA = 5
+
+
 def lista_libros(request):
-    """Listado con buscador (título, autor o ISBN) y filtros por género y disponibilidad."""
+    """Listado paginado con buscador (título, autor o ISBN) y filtros por género y disponibilidad."""
     q = request.GET.get("q", "").strip()
     genero = request.GET.get("genero", "")
     disponible = request.GET.get("disponible", "")
@@ -72,8 +76,17 @@ def lista_libros(request):
     else:
         disponible = ""
 
+    # Paginación: 5 libros por página (get_page corrige páginas inválidas)
+    paginador = Paginator(libros, LIBROS_POR_PAGINA)
+    pagina = paginador.get_page(request.GET.get("page"))
+
+    # Parámetros actuales sin "page", para que los enlaces de página conserven la búsqueda
+    parametros = request.GET.copy()
+    parametros.pop("page", None)
+
     contexto = {
-        "libros": libros,
+        "pagina": pagina,
+        "parametros": parametros.urlencode(),
         "q": q,
         "genero": genero,
         "disponible": disponible,

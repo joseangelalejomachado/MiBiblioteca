@@ -22,9 +22,9 @@
     {% if hay_filtros %}<a href="{% url 'lista_libros' %}">Limpiar</a>{% endif %}
 </form>
 
-{% if hay_filtros %}<p class="resultados">{{ libros|length }} resultado{{ libros|length|pluralize }}</p>{% endif %}
+{% if hay_filtros %}<p class="resultados">{{ pagina.paginator.count }} resultado{{ pagina.paginator.count|pluralize }}</p>{% endif %}
 
-{% if libros %}
+{% if pagina %}
 <table class="tabla-libros">
     <thead>
         <tr>
@@ -35,7 +35,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for libro in libros %}
+        {% for libro in pagina %}
         <tr>
             <td><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></td>
             <td>{{ libro.autor }}</td>
@@ -51,6 +51,22 @@
         {% endfor %}
     </tbody>
 </table>
+
+{% if pagina.has_other_pages %}
+<nav class="paginacion" aria-label="Paginación">
+    {% if pagina.has_previous %}
+    <a href="?{% if parametros %}{{ parametros }}&amp;{% endif %}page={{ pagina.previous_page_number }}">&laquo; Anterior</a>
+    {% else %}
+    <span class="deshabilitado">&laquo; Anterior</span>
+    {% endif %}
+    <span class="pagina-actual">Página {{ pagina.number }} de {{ pagina.paginator.num_pages }}</span>
+    {% if pagina.has_next %}
+    <a href="?{% if parametros %}{{ parametros }}&amp;{% endif %}page={{ pagina.next_page_number }}">Siguiente &raquo;</a>
+    {% else %}
+    <span class="deshabilitado">Siguiente &raquo;</span>
+    {% endif %}
+</nav>
+{% endif %}
 {% else %}
 <p class="vacio">{% if hay_filtros %}Ningún libro coincide con la búsqueda{% else %}No hay libros en el catálogo{% endif %}</p>
 {% endif %}

@@ -185,3 +185,20 @@ a {
 .resultados {
     color: #555555;
 }
+
+/* Paginación del listado */
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.paginacion .deshabilitado {
+    color: #999999;
+}
+
+.paginacion .pagina-actual {
+    font-weight: 600;
+}
