@@ -42,7 +42,7 @@ python manage.py showmigrations catalogo
 python manage.py shell < cargar_libros.py
 ```
 
-> El operador `<` no está disponible en PowerShell. En Windows, ejecuta estos comandos desde CMD o Git Bash.
+> **Windows:** el operador `<` no está disponible en PowerShell, así que ejecuta estos comandos desde CMD o Git Bash. Antes, define `PYTHONUTF8=1` para que las tildes se guarden bien en la base de datos (`set PYTHONUTF8=1` en CMD, `export PYTHONUTF8=1` en Git Bash). En PowerShell: `$env:PYTHONUTF8 = "1"` y después `cmd /c "python manage.py shell < cargar_libros.py"`.
 
 ## Ejecutar
 
@@ -76,7 +76,7 @@ Cada actividad tiene su etiqueta (`ut4-act1` a `ut4-act5`) para localizar el est
 | 4. CRUD del catálogo               | Crear, leer, actualizar y borrar con el ORM    | `actividad4_crud.py`, `Actividad4.md`      |
 | 5. Boletín de consultas ORM        | 15 consultas con filtros, orden y agregaciones | `actividad5_consultas.py`, `Actividad5.md` |
 
-Los scripts de las actividades 4 y 5 se ejecutan igual que la carga de datos:
+Los scripts de las actividades 4 y 5 se ejecutan igual que la carga de datos (en Windows, con `PYTHONUTF8=1`, como se explica arriba):
 
 ```bash
 python manage.py shell < actividad4_crud.py
