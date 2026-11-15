@@ -25,12 +25,14 @@
 {% if hay_filtros %}<p class="resultados">{{ pagina.paginator.count }} resultado{{ pagina.paginator.count|pluralize }}</p>{% endif %}
 
 {% if pagina %}
+<div class="tabla-contenedor">
 <table class="tabla-libros">
     <thead>
         <tr>
             <th>Título</th>
             <th>Autor</th>
             <th>Género</th>
+            <th class="numero">Precio</th>
             <th>Estado</th>
         </tr>
     </thead>
@@ -40,6 +42,7 @@
             <td><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></td>
             <td>{{ libro.autor }}</td>
             <td>{{ libro.get_genero_display }}</td>
+            <td class="numero">{{ libro.precio|floatformat:2 }} €</td>
             <td>
                 {% if libro.disponible %}
                 <span class="estado disponible">Disponible</span>
@@ -51,6 +54,7 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 
 {% if pagina.has_other_pages %}
 <nav class="paginacion" aria-label="Paginación">

@@ -35,6 +35,7 @@
 </ul>
 
 <h2>Agregaciones con aggregate()</h2>
+<div class="tabla-contenedor">
 <table class="tabla-libros">
     <thead>
         <tr>
@@ -53,10 +54,12 @@
         </tr>
     </tbody>
 </table>
+</div>
 
 <h2>Grupos con annotate()</h2>
 
 <h3>Libros por disponibilidad</h3>
+<div class="tabla-contenedor">
 <table class="tabla-libros">
     <thead>
         <tr>
@@ -73,8 +76,10 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 
 <h3>Libros y precio medio por género</h3>
+<div class="tabla-contenedor">
 <table class="tabla-libros">
     <thead>
         <tr>
@@ -93,4 +98,5 @@
         {% endfor %}
     </tbody>
 </table>
+</div>
 {% endblock %}

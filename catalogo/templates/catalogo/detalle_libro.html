@@ -22,13 +22,13 @@
     <dt>Año de publicación</dt>
     <dd>{{ libro.anio_publicacion }}</dd>
     <dt>Fecha de publicación</dt>
-    <dd>{{ libro.fecha_publicacion }}</dd>
+    <dd>{{ libro.fecha_publicacion|date:"d/m/Y" }}</dd>
     <dt>Páginas</dt>
     <dd>{{ libro.paginas }}</dd>
     <dt>Precio</dt>
-    <dd>{{ libro.precio }} €</dd>
+    <dd>{{ libro.precio|floatformat:2 }} €</dd>
     <dt>Estado</dt>
-    <dd>{% if libro.disponible %}Disponible{% else %}No disponible{% endif %}</dd>
+    <dd>{% if libro.disponible %}<span class="estado disponible">Disponible</span>{% else %}<span class="estado no-disponible">No disponible</span>{% endif %}</dd>
 </dl>
 <a class="button" href="{% url 'lista_libros' %}">Volver al catálogo</a>
 {% endblock %}
