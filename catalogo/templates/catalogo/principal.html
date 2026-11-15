@@ -1,0 +1,96 @@
+{% extends 'catalogo/base.html' %}
+
+{% block page_title %}Resumen | MiBiblioteca{% endblock %}
+
+{% block contenido %}
+<h1>Resumen del catálogo</h1>
+
+<h2>Consultas con Q</h2>
+
+<h3>Título con «python» y «django» (AND)</h3>
+<ul>
+    {% for libro in python_y_django %}
+    <li><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></li>
+    {% empty %}
+    <li class="vacio">Ningún libro cumple las dos condiciones</li>
+    {% endfor %}
+</ul>
+
+<h3>Título con «python» o «django» (OR)</h3>
+<ul>
+    {% for libro in python_o_django %}
+    <li><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></li>
+    {% empty %}
+    <li class="vacio">Ningún libro cumple alguna condición</li>
+    {% endfor %}
+</ul>
+
+<h3>Título sin «python» (NOT)</h3>
+<ul>
+    {% for libro in sin_python %}
+    <li><a href="{% url 'detalle_libro' libro.pk %}">{{ libro.titulo }}</a></li>
+    {% empty %}
+    <li class="vacio">Todos los libros contienen «python»</li>
+    {% endfor %}
+</ul>
+
+<h2>Agregaciones con aggregate()</h2>
+<table class="tabla-libros">
+    <thead>
+        <tr>
+            <th>Total de libros</th>
+            <th>Precio medio</th>
+            <th>Precio máximo</th>
+            <th>Precio mínimo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ resumen.total }}</td>
+            <td>{{ resumen.media|floatformat:2 }} €</td>
+            <td>{{ resumen.maximo|floatformat:2 }} €</td>
+            <td>{{ resumen.minimo|floatformat:2 }} €</td>
+        </tr>
+    </tbody>
+</table>
+
+<h2>Grupos con annotate()</h2>
+
+<h3>Libros por disponibilidad</h3>
+<table class="tabla-libros">
+    <thead>
+        <tr>
+            <th>Estado</th>
+            <th>Libros</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grupo in por_disponibilidad %}
+        <tr>
+            <td>{% if grupo.disponible %}Disponibles{% else %}No disponibles{% endif %}</td>
+            <td>{{ grupo.total }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h3>Libros y precio medio por género</h3>
+<table class="tabla-libros">
+    <thead>
+        <tr>
+            <th>Género</th>
+            <th>Libros</th>
+            <th>Precio medio</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for grupo in por_genero %}
+        <tr>
+            <td>{{ grupo.genero }}</td>
+            <td>{{ grupo.total }}</td>
+            <td>{{ grupo.precio_medio|floatformat:2 }} €</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
