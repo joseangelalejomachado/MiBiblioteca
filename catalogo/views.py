@@ -51,8 +51,36 @@ def principal(request):
 
 
 def lista_libros(request):
+    """Listado con buscador (título, autor o ISBN) y filtros por género y disponibilidad."""
+    q = request.GET.get("q", "").strip()
+    genero = request.GET.get("genero", "")
+    disponible = request.GET.get("disponible", "")
+
     libros = Libro.objects.order_by("titulo")
-    return render(request, "catalogo/lista_libros.html", {"libros": libros})
+    if q:
+        libros = libros.filter(
+            Q(titulo__icontains=q) | Q(autor__icontains=q) | Q(isbn__icontains=q)
+        )
+    if genero in Libro.Genero.values:
+        libros = libros.filter(genero=genero)
+    else:
+        genero = ""
+    if disponible == "si":
+        libros = libros.filter(disponible=True)
+    elif disponible == "no":
+        libros = libros.filter(disponible=False)
+    else:
+        disponible = ""
+
+    contexto = {
+        "libros": libros,
+        "q": q,
+        "genero": genero,
+        "disponible": disponible,
+        "generos": Libro.Genero.choices,
+        "hay_filtros": bool(q or genero or disponible),
+    }
+    return render(request, "catalogo/lista_libros.html", contexto)
 
 def detalle_libro(request, pk):
     libro = get_object_or_404(Libro, pk=pk)

@@ -5,6 +5,25 @@
 {% block contenido %}
 <h1>Catálogo de libros</h1>
 
+<form method="get" class="filtros">
+    <input type="search" name="q" value="{{ q }}" placeholder="Buscar por título, autor o ISBN">
+    <select name="genero">
+        <option value="">Todos los géneros</option>
+        {% for valor, etiqueta in generos %}
+        <option value="{{ valor }}"{% if valor == genero %} selected{% endif %}>{{ etiqueta }}</option>
+        {% endfor %}
+    </select>
+    <select name="disponible">
+        <option value="">Cualquier estado</option>
+        <option value="si"{% if disponible == "si" %} selected{% endif %}>Disponibles</option>
+        <option value="no"{% if disponible == "no" %} selected{% endif %}>No disponibles</option>
+    </select>
+    <button type="submit">Filtrar</button>
+    {% if hay_filtros %}<a href="{% url 'lista_libros' %}">Limpiar</a>{% endif %}
+</form>
+
+{% if hay_filtros %}<p class="resultados">{{ libros|length }} resultado{{ libros|length|pluralize }}</p>{% endif %}
+
 {% if libros %}
 <table class="tabla-libros">
     <thead>
@@ -33,6 +52,6 @@
     </tbody>
 </table>
 {% else %}
-<p class="vacio">No hay libros en el catálogo</p>
+<p class="vacio">{% if hay_filtros %}Ningún libro coincide con la búsqueda{% else %}No hay libros en el catálogo{% endif %}</p>
 {% endif %}
 {% endblock %}

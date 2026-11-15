@@ -146,3 +146,42 @@ a {
 .button:hover {
     background: var(--color-acento);
 }
+
+/* Buscador y filtros del listado */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.filtros input[type="search"] {
+    flex: 1 1 220px;
+}
+
+.filtros input,
+.filtros select,
+.filtros button {
+    padding: 0.4rem 0.6rem;
+    font: inherit;
+    border: 1px solid #bbbbbb;
+    border-radius: 4px;
+    background: #ffffff;
+}
+
+.filtros button {
+    background: var(--color-primario);
+    border-color: var(--color-primario);
+    color: #ffffff;
+    cursor: pointer;
+}
+
+.filtros button:hover {
+    background: var(--color-acento);
+    border-color: var(--color-acento);
+}
+
+.resultados {
+    color: #555555;
+}
